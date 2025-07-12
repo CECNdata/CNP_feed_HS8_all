@@ -9,6 +9,7 @@ env:
   repo_name: CECNdata/GA-sec
   csv: CNP-all-HS8-Backfill.csv
   retry: 3
+  cncc_url: http://stats.customs.gov.cn/queryData/queryDataList
 
 jobs:
   download:
@@ -50,5 +51,6 @@ jobs:
       - name: run customs download
         continue-on-error: true
         run: |
-            cd feed/CNP-Customs-HS8
-            timeout 1800 xvfb-run python firefox-dl/run_release_day.py   --path mapping/${{env.csv}} --line "${{matrix.line}}" --retry ${{env.retry}}
+            cd feed
+            timeout 1800 xvfb-run python download_pyscript/run_release_day.py   --path CNP-Customs-HS8/mapping/${{env.csv}} --line "${{matrix.line}}" --retry ${{env.retry}}
+            
